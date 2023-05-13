@@ -1,0 +1,84 @@
+From b9bf179656c1bc78af83d21f28d376dfda19ff5a Mon Sep 17 00:00:00 2001
+From: gerty1986823 <gerty1986823@126.com>
+Date: Sat, 28 Nov 2020 20:28:04 +0800
+Subject: [PATCH] gejingquan
+
+Signed-off-by: gerty1986823 <gerty1986823@126.com>
+---
+ core/arch/arm/tee/entry_std.c |  9 +++++++--
+ core/kernel/tee_ta_manager.c  |  2 +-
+ patch.sh                      | 15 +++++++++++++++
+ 3 files changed, 23 insertions(+), 3 deletions(-)
+ create mode 100755 patch.sh
+
+diff --git a/core/arch/arm/tee/entry_std.c b/core/arch/arm/tee/entry_std.c
+index 876f97e..f25d426 100644
+--- a/core/arch/arm/tee/entry_std.c
++++ b/core/arch/arm/tee/entry_std.c
+@@ -379,7 +379,9 @@ static void entry_invoke_command(struct thread_smc_args *smc_args,
+ 	struct tee_ta_session *s;
+ 	struct tee_ta_param param = { 0 };
+ 	uint64_t saved_attr[TEE_NUM_PARAMS] = { 0 };
+-
++	
++	EMSG("All in entry_invoke_command");
++	
+ 	bm_timestamp();
+ 
+ 	res = copy_in_params(arg->params, num_params, &param, saved_attr);
+@@ -544,7 +546,7 @@ void __weak tee_entry_std(struct thread_smc_args *smc_args)
+ 	struct optee_msg_arg *arg = NULL;
+ 	uint32_t num_params = 0;
+ 	struct mobj *mobj = NULL;
+-
++		
+ 	if (smc_args->a0 != OPTEE_SMC_CALL_WITH_ARG) {
+ 		EMSG("Unknown SMC 0x%" PRIx64, (uint64_t)smc_args->a0);
+ 		DMSG("Expected 0x%x", OPTEE_SMC_CALL_WITH_ARG);
+@@ -580,6 +582,9 @@ void __weak tee_entry_std(struct thread_smc_args *smc_args)
+ 
+ 	/* Enable foreign interrupts for STD calls */
+ 	thread_set_foreign_intr(true);
++	
++	EMSG("All in tee_entry_std,arg->cmd=%lx",arg->cmd);	
++	
+ 	switch (arg->cmd) {
+ 	case OPTEE_MSG_CMD_OPEN_SESSION:
+ 		entry_open_session(smc_args, arg, num_params);
+diff --git a/core/kernel/tee_ta_manager.c b/core/kernel/tee_ta_manager.c
+index a4203f7..85f70ca 100644
+--- a/core/kernel/tee_ta_manager.c
++++ b/core/kernel/tee_ta_manager.c
+@@ -734,7 +734,7 @@ TEE_Result tee_ta_invoke_command(TEE_ErrorOrigin *err,
+ 				 struct tee_ta_param *param)
+ {
+ 	TEE_Result res;
+-
++	
+ 	if (check_client(sess, clnt_id) != TEE_SUCCESS)
+ 		return TEE_ERROR_BAD_PARAMETERS; /* intentional generic error */
+ 
+diff --git a/patch.sh b/patch.sh
+new file mode 100755
+index 0000000..b653626
+--- /dev/null
++++ b/patch.sh
+@@ -0,0 +1,15 @@
++#!/bin/bash
++
++rm -rf 0001-gejingquan.patch
++
++git reset --soft f398d4
++
++git add .
++
++git commit -s -m 'gejingquan'
++
++git format-patch -1
++
++cp 0001-gejingquan.patch /media/gejingquan/HDD/petalinux/zcu102_optee/zcu102-2018.2/project-spec/meta-user/recipes-bsp/optee-os/files/
++
++
+-- 
+2.7.4
+

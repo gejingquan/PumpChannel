@@ -1,0 +1,32 @@
+[ 1529.003102] I am in the malicious kernel module!
+[ 1529.007501] current->cpu : 2
+[ 1529.011906] current->pid : 2531
+[ 1529.016331] Using Physmap, I can access the key page :
+[ 1529.020753] 
+[ 1529.025178] Physical address range      :  Characters
+[ 1529.029608] 0x8771b3000...0x8771b300f   :  ################
+[ 1529.034033] 0x8771b3010...0x8771b301f   :      I am key!
+[ 1529.038470] 0x8771b3020...0x8771b302f   :  ################
+[ 1529.042909] 0x8771b3030...0x8771b303f   :
+[ 1529.048099] 0x8771b3040...0x8771b304f   :
+
+
+I am the legal CA process.
+sched_getcpu : 1
+getpid : 2530
+Physical address of key page: 0x8771b3000
+Characters in the key page is as follows:
+
+################
+    I am key!
+################
+
+Now I am using the key to calculate...
+
+
+
+
+
+
+
+ 

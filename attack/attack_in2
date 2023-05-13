@@ -1,0 +1,21 @@
+[12125.173342] I am in the malicious kernel module!
+[12125.177745] current->cpu : 2
+[12125.182149] current->pid : 2639
+[12125.189865] 
+[12125.196576] Physical address of input shared memory : 0x70001000
+[12125.200998] Physical address of output shared memory: 0x70002000
+[12125.214276] 
+[12125.218713] Physical address : hexadecimal data
+[12125.223149] 0x70001000       : a352ecabfc331daaaaac50446ab5fbb8
+[12125.228341] 0x70001010       : eb5bc177b1170be14d95638cb3df3da6
+[12125.233720] 0x70001020       : a352ecabfc331daaaaac50446ab5fbb8
+[12125.238840]
+[12125.241993] Tamper with the input shared memory using Physmap...
+[12125.252028] 
+[12125.255436] Physical address : hexadecimal data
+[12125.268734] 0x70001000       : 80a5fc2311eeb5bd190b259ce8c2012b
+[12125.262028] 0x70001010       : ca151600131b1b82e1b7446d1c7cff24
+[12125.274464] 0x70001020       : 80a5fc2311eeb5bd190b259ce8c2012b
+[12133.781465]
+[12133.785436] The CA process starts invoking the TA now...
+

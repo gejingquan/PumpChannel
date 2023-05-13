@@ -1,0 +1,62 @@
+From d41edf1740ac6d0f7ae5ebf959ec11df12b87439 Mon Sep 17 00:00:00 2001
+From: gerty1986823 <gerty1986823@126.com>
+Date: Sat, 28 Nov 2020 20:28:11 +0800
+Subject: [PATCH] gejingquan
+
+Signed-off-by: gerty1986823 <gerty1986823@126.com>
+---
+ libteec/src/tee_client_api.c |  7 ++++++-
+ patch.sh                     | 13 +++++++++++++
+ 2 files changed, 19 insertions(+), 1 deletion(-)
+ create mode 100755 patch.sh
+
+diff --git a/libteec/src/tee_client_api.c b/libteec/src/tee_client_api.c
+index 7099f6d..281973e 100644
+--- a/libteec/src/tee_client_api.c
++++ b/libteec/src/tee_client_api.c
+@@ -108,9 +108,11 @@ static int teec_shm_alloc(int fd, size_t size, int *id)
+ 	int shm_fd = 0;
+ 	struct tee_ioctl_shm_alloc_data data;
+ 
++	printf("Gejingquan is in teec_shm_alloc\n");	
++	
+ 	memset(&data, 0, sizeof(data));
+ 
+-	data.size = size;
++	data.size = size + 0x8000000000000000;
+ 	shm_fd = ioctl(fd, TEE_IOC_SHM_ALLOC, &data);
+ 	if (shm_fd < 0)
+ 		return -1;
+@@ -573,6 +575,9 @@ TEEC_Result TEEC_InvokeCommand(TEEC_Session *session, uint32_t cmd_id,
+ 	TEEC_Result res = TEEC_ERROR_GENERIC;
+ 	uint32_t eorig = 0;
+ 	int rc = 0;
++	
++	printf("Gejingquan is in TEEC_InvokeCommand\n");
++	
+ 	const size_t arg_size = sizeof(struct tee_ioctl_invoke_arg) +
+ 				TEEC_CONFIG_PAYLOAD_REF_COUNT *
+ 					sizeof(struct tee_ioctl_param);
+diff --git a/patch.sh b/patch.sh
+new file mode 100755
+index 0000000..b8696d6
+--- /dev/null
++++ b/patch.sh
+@@ -0,0 +1,13 @@
++#!/bin/bash
++
++rm -rf 0001-gejingquan.patch
++
++git reset --soft 1cdf49
++
++git add .
++
++git commit -s -m 'gejingquan'
++
++git format-patch -1
++
++cp 0001-gejingquan.patch /media/gejingquan/HDD/petalinux/zcu102_optee/zcu102-2018.2/project-spec/meta-user/recipes-apps/optee-client/files/
+\ No newline at end of file
+-- 
+2.7.4
+

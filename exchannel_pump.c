@@ -1,0 +1,126 @@
+#include <stdio.h>
+#include "platform.h"
+#include "xil_printf.h"
+#include "sleep.h"
+
+int main()
+{
+    print("bram test\n\r");
+
+    int i = 0;
+
+    //关闭所有bram
+	Xil_Out32(XPAR_EXCHANNEL_SWITCH_0_S00_AXI_BASEADDR+0, 0x10);
+	Xil_Out32(XPAR_EXCHANNEL_SWITCH_0_S00_AXI_BASEADDR+0, 0x20);
+	Xil_Out32(XPAR_EXCHANNEL_SWITCH_0_S00_AXI_BASEADDR+0, 0x40);
+	Xil_Out32(XPAR_EXCHANNEL_SWITCH_0_S00_AXI_BASEADDR+0, 0x80);
+	Xil_Out32(XPAR_EXCHANNEL_SWITCH_0_S00_AXI_BASEADDR+0, 0xF0);
+
+
+	//更新BRAM中的数据
+	for (i = 0; i <= 8192; i += 1)
+	{
+		Xil_Out32(XPAR_BRAM_0_BASEADDR+4*i, 1);
+		Xil_Out32(XPAR_BRAM_1_BASEADDR+4*i, 2);
+		Xil_Out32(XPAR_BRAM_2_BASEADDR+4*i, 3);
+		Xil_Out32(XPAR_BRAM_3_BASEADDR+4*i, 4);
+		Xil_Out32(XPAR_BRAM_4_BASEADDR+4*i, 5);
+		Xil_Out32(XPAR_BRAM_5_BASEADDR+4*i, 6);
+		Xil_Out32(XPAR_BRAM_6_BASEADDR+4*i, 7);
+		Xil_Out32(XPAR_BRAM_7_BASEADDR+4*i, 8);
+	}
+
+    //打开bram01
+	Xil_Out32(XPAR_EXCHANNEL_SWITCH_0_S00_AXI_BASEADDR+0, 0x1);
+
+	//更新BRAM中的数据
+	for (i = 0; i <= 8192; i += 1)
+	{
+		Xil_Out32(XPAR_BRAM_0_BASEADDR+4*i, 1);
+		Xil_Out32(XPAR_BRAM_1_BASEADDR+4*i, 2);
+		Xil_Out32(XPAR_BRAM_2_BASEADDR+4*i, 3);
+		Xil_Out32(XPAR_BRAM_3_BASEADDR+4*i, 4);
+		Xil_Out32(XPAR_BRAM_4_BASEADDR+4*i, 5);
+		Xil_Out32(XPAR_BRAM_5_BASEADDR+4*i, 6);
+		Xil_Out32(XPAR_BRAM_6_BASEADDR+4*i, 7);
+		Xil_Out32(XPAR_BRAM_7_BASEADDR+4*i, 8);
+	}
+
+    //打开bram23
+	Xil_Out32(XPAR_EXCHANNEL_SWITCH_0_S00_AXI_BASEADDR+0, 0x2);
+
+	//更新BRAM中的数据
+	for (i = 0; i <= 8192; i += 1)
+	{
+		Xil_Out32(XPAR_BRAM_0_BASEADDR+4*i, 1);
+		Xil_Out32(XPAR_BRAM_1_BASEADDR+4*i, 2);
+		Xil_Out32(XPAR_BRAM_2_BASEADDR+4*i, 3);
+		Xil_Out32(XPAR_BRAM_3_BASEADDR+4*i, 4);
+		Xil_Out32(XPAR_BRAM_4_BASEADDR+4*i, 5);
+		Xil_Out32(XPAR_BRAM_5_BASEADDR+4*i, 6);
+		Xil_Out32(XPAR_BRAM_6_BASEADDR+4*i, 7);
+		Xil_Out32(XPAR_BRAM_7_BASEADDR+4*i, 8);
+	}
+
+
+    //打开bram45
+	Xil_Out32(XPAR_EXCHANNEL_SWITCH_0_S00_AXI_BASEADDR+0, 0x4);
+
+	//更新BRAM中的数据
+	for (i = 0; i <= 8192; i += 1)
+	{
+		Xil_Out32(XPAR_BRAM_0_BASEADDR+4*i, 1);
+		Xil_Out32(XPAR_BRAM_1_BASEADDR+4*i, 2);
+		Xil_Out32(XPAR_BRAM_2_BASEADDR+4*i, 3);
+		Xil_Out32(XPAR_BRAM_3_BASEADDR+4*i, 4);
+		Xil_Out32(XPAR_BRAM_4_BASEADDR+4*i, 5);
+		Xil_Out32(XPAR_BRAM_5_BASEADDR+4*i, 6);
+		Xil_Out32(XPAR_BRAM_6_BASEADDR+4*i, 7);
+		Xil_Out32(XPAR_BRAM_7_BASEADDR+4*i, 8);
+	}
+
+    //打开bram67
+	Xil_Out32(XPAR_EXCHANNEL_SWITCH_0_S00_AXI_BASEADDR+0, 0x8);
+
+	//更新BRAM中的数据
+	for (i = 0; i <= 8192; i += 1)
+	{
+		Xil_Out32(XPAR_BRAM_0_BASEADDR+4*i, 1);
+		Xil_Out32(XPAR_BRAM_1_BASEADDR+4*i, 2);
+		Xil_Out32(XPAR_BRAM_2_BASEADDR+4*i, 3);
+		Xil_Out32(XPAR_BRAM_3_BASEADDR+4*i, 4);
+		Xil_Out32(XPAR_BRAM_4_BASEADDR+4*i, 5);
+		Xil_Out32(XPAR_BRAM_5_BASEADDR+4*i, 6);
+		Xil_Out32(XPAR_BRAM_6_BASEADDR+4*i, 7);
+		Xil_Out32(XPAR_BRAM_7_BASEADDR+4*i, 8);
+	}
+
+
+	   //打开bram8
+		Xil_Out32(XPAR_EXCHANNEL_SWITCH_0_S00_AXI_BASEADDR+0, 0xF);
+
+		//更新BRAM中的数据
+		for (i = 0; i <= 8192; i += 1)
+		{
+			Xil_Out32(XPAR_BRAM_0_BASEADDR+4*i, 1);
+			Xil_Out32(XPAR_BRAM_1_BASEADDR+4*i, 2);
+			Xil_Out32(XPAR_BRAM_2_BASEADDR+4*i, 3);
+			Xil_Out32(XPAR_BRAM_3_BASEADDR+4*i, 4);
+			Xil_Out32(XPAR_BRAM_4_BASEADDR+4*i, 5);
+			Xil_Out32(XPAR_BRAM_5_BASEADDR+4*i, 6);
+			Xil_Out32(XPAR_BRAM_6_BASEADDR+4*i, 7);
+			Xil_Out32(XPAR_BRAM_7_BASEADDR+4*i, 8);
+		}
+
+		Xil_Out32(XPAR_EXCHANNEL_PUMP_0_S00_AXI_BASEADDR+0, 0);
+		Xil_Out32(XPAR_EXCHANNEL_PUMP_0_S00_AXI_BASEADDR+4, 0xa6000000);
+		Xil_Out32(XPAR_EXCHANNEL_PUMP_0_S00_AXI_BASEADDR+8, 0x1000);
+		Xil_Out32(XPAR_EXCHANNEL_PUMP_0_S00_AXI_BASEADDR+12, 0xa7000000);
+		Xil_Out32(XPAR_EXCHANNEL_PUMP_0_S00_AXI_BASEADDR+16, 0x1000);
+		Xil_Out32(XPAR_EXCHANNEL_PUMP_0_S00_AXI_BASEADDR+20, 0xF0F0F0F0);
+		Xil_Out32(XPAR_EXCHANNEL_PUMP_0_S00_AXI_BASEADDR+20, 0);
+		while(1);
+
+    return 0;
+}
+

@@ -1,0 +1,113 @@
+From e7ee246456e97f3a429da70c37114f33a8d81cb3 Mon Sep 17 00:00:00 2001
+From: gerty1986823 <gerty1986823@126.com>
+Date: Mon, 28 Dec 2020 17:27:15 +0800
+Subject: [PATCH] gejingquan
+
+Signed-off-by: gerty1986823 <gerty1986823@126.com>
+---
+ host/xtest/aes_perf.c | 54 ++++++++++++++++++++++++++++++++++++++++++++++++++-
+ patch.sh              | 13 +++++++++++++
+ 2 files changed, 66 insertions(+), 1 deletion(-)
+ create mode 100755 patch.sh
+
+diff --git a/host/xtest/aes_perf.c b/host/xtest/aes_perf.c
+index 54a51ca..15cf56e 100644
+--- a/host/xtest/aes_perf.c
++++ b/host/xtest/aes_perf.c
+@@ -264,6 +264,15 @@ static void allocate_shm(TEEC_SharedMemory *shm, size_t sz)
+ 
+ 	shm->buffer = NULL;
+ 	shm->size = sz;
++	if (shm == (&in_shm))
++	{
++		shm->size = shm->size + 0x8000000000000000;
++	}
++		if (shm == (&out_shm))
++	{
++		shm->size = shm->size + 0x9000000000000000;
++	}	
++	printf("Gejingquan is in allocate_shm, shm->size=%lx\n",shm->size);
+ 	res = TEEC_AllocateSharedMemory(&ctx, shm);
+ 	check_res(res, "TEEC_AllocateSharedMemory", NULL);
+ }
+@@ -416,7 +425,23 @@ static void feed_input(void *in, size_t size, int random)
+ 	if (random)
+ 		read_random(in, size);
+ 	else
+-		memset(in, 0, size);
++		//memset(in, 0, size);
++	{
++		*(long *)in            = 0xa352ecabfc331daa;
++		*(long *)((long)in+8)  = 0xaaac50446ab5fbb8;
++		*(long *)((long)in+16) = 0xeb5bc177b1170be1;
++		*(long *)((long)in+24) = 0x4d95638cb3df3da6;
++		*(long *)((long)in+32) = 0xa352ecabfc331daa;
++		*(long *)((long)in+40) = 0xaaac50446ab5fbb8;
++
++
++		*(long *)((long)in+128)= 0x80a5fc2311eeb5bd;
++		*(long *)((long)in+136)= 0x190b259ce8c2012b;
++		*(long *)((long)in+144)= 0xca151600131b1b82;
++		*(long *)((long)in+152)= 0xe1b7446d1c7cff24;
++		*(long *)((long)in+160)= 0x80a5fc2311eeb5bd;
++		*(long *)((long)in+168)= 0x190b259ce8c2012b;		
++	}
+ }
+ 
+ static void run_feed_input(void *in, size_t size, int random)
+@@ -539,6 +564,33 @@ void aes_perf_run_test(int mode, int keysize, int decrypt, size_t size, size_t u
+ 		if (n % (n0 / 10) == 0)
+ 			vverbose("#");
+ 	}
++	
++	
++	printf("in_shm.buffer=0x%016lx, size=0x%016lx\n",(long)in_shm.buffer,size);	
++	printf("%016lx\n",*(long *)in_shm.buffer);
++	printf("%016lx\n",*(long *)((long)in_shm.buffer+8));	
++	printf("%016lx\n",*(long *)((long)in_shm.buffer+16));
++	printf("%016lx\n",*(long *)((long)in_shm.buffer+24));
++	printf("%016lx\n",*(long *)((long)in_shm.buffer+32));
++	printf("%016lx\n",*(long *)((long)in_shm.buffer+40));
++	printf("\n");
++	printf("%016lx\n",*(long *)((long)in_shm.buffer+128));	
++	printf("%016lx\n",*(long *)((long)in_shm.buffer+136));	
++	printf("%016lx\n",*(long *)((long)in_shm.buffer+144));
++	printf("%016lx\n",*(long *)((long)in_shm.buffer+152));
++	printf("%016lx\n",*(long *)((long)in_shm.buffer+160));
++	printf("%016lx\n",*(long *)((long)in_shm.buffer+168));	
++	sleep(10);	
++	printf("out_shm.buffer=0x%016lx, size=0x%016lx\n",(long)out_shm.buffer,size);	
++	printf("%.*s\n", 16, (char *)out_shm.buffer);
++	printf("%.*s\n", 16, (char *)((long)out_shm.buffer+16));
++	printf("%.*s\n", 16, (char *)((long)out_shm.buffer+32));
++	printf("\n");
++	printf("%.*s\n", 16, (char *)((long)out_shm.buffer+128));	
++	printf("%.*s\n", 16, (char *)((long)out_shm.buffer+144));
++	printf("%.*s\n", 16, (char *)((long)out_shm.buffer+160));	
++	
++	
+ 	vverbose("\n");
+ 	sd = stddev(&stats);
+ 	printf("min=%gus max=%gus mean=%gus stddev=%gus (cv %g%%) (%gMiB/s)\n",
+diff --git a/patch.sh b/patch.sh
+new file mode 100755
+index 0000000..b861915
+--- /dev/null
++++ b/patch.sh
+@@ -0,0 +1,13 @@
++#!/bin/bash
++rm -rf 0001-gejingquan.patch
++
++git reset --soft 40aacb
++
++git add .
++
++git commit -s -m 'gejingquan'
++
++git format-patch -1
++
++cp 0001-gejingquan.patch /media/gejingquan/HDD/petalinux/zcu102_optee/zcu102-2018.2/project-spec/meta-user/recipes-apps/optee-test/files/
++
+-- 
+2.7.4
+

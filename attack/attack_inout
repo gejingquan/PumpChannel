@@ -1,0 +1,81 @@
+This is the decryption result of the original data!
+ 
+The input hexadecimal data is as follows:
+
+a352ecabfc331daaaaac50446ab5fbb8
+eb5bc177b1170be14d95638cb3df3da6
+a352ecabfc331daaaaac50446ab5fbb8
+
+Invoke the AES decryption TA of TEE... 
+
+The output characters is as follows:
+
+%%%%%%%%%%%%%%%%
+    I am CA!
+%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+This is the decryption result of the attacker's data!
+ 
+The input hexadecimal data is as follows:
+
+80a5fc2311eeb5bd190b259ce8c2012b
+ca151600131b1b82e1b7446d1c7cff24
+80a5fc2311eeb5bd190b259ce8c2012b
+
+Invoke the AES decryption TA of TEE... 
+
+The output characters is as follows:
+
+################
+ I am attacker!
+################
+
+
+
+[12125.173342] I am in the malicious kernel module!
+[12125.177745] current->cpu : 2
+[12125.182149] current->pid : 2639
+[12125.189865] 
+[12125.191359] Using jprobe(), I have got the physical addresses!
+[12125.196576] Physical address of input shared memory : 0x70001000
+[12125.200998] Physical address of output shared memory: 0x70002000
+[12125.214276] 
+[12125.218713] Physical address range   :  hexadecimal data
+[12125.223149] 0x70001000...0x7000100f  :  a352ecabfc331daaaaac50446ab5fbb8
+[12125.228341] 0x70001010...0x7000101f  :  eb5bc177b1170be14d95638cb3df3da6
+[12125.233720] 0x70001020...0x7000102f  :  a352ecabfc331daaaaac50446ab5fbb8
+[12125.238840]
+[12125.241993] Tamper with the input shared memory using Physmap...
+[12125.245613]   
+[12125.249865] After tampering, the input shared memory is as follows:
+[12125.252028] 
+[12125.255436] Physical address range   :  hexadecimal data
+[12125.268734] 0x70001000...0x7000100f  :  80a5fc2311eeb5bd190b259ce8c2012b
+[12125.262028] 0x70001010...0x7000101f  :  ca151600131b1b82e1b7446d1c7cff24
+[12125.274464] 0x70001020...0x7000102f  :  80a5fc2311eeb5bd190b259ce8c2012b
+[12125.289791]
+[12125.294120] Using kprobe() to monitor the TA invocation...
+[12133.781465]
+[12133.785436] The CA process starts invoking the TA now...
+[12133.789159]			   
+[12133.798734] After invoking the TA, the output shared memory is as follows:
+[12133.803395]			   
+[12133.815436] Physical address range   :  Characters
+[12133.818734] 0x70002000...0x7000200f  :  ################
+[12133.822028] 0x70002010...0x7000201f  :   I am attacker!
+[12133.824464] 0x70002020...0x7000202f  :  ################
+
+
+
+
+
+
+
+
+
+

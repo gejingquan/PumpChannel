@@ -1,0 +1,20 @@
+This is the decryption process using the 
+original communication channel!
+
+sched_getcpu : 1
+getpid : 2638
+
+The input hexadecimal data is as follows:
+
+a352ecabfc331daaaaac50446ab5fbb8
+eb5bc177b1170be14d95638cb3df3da6
+a352ecabfc331daaaaac50446ab5fbb8
+
+Now sleep for 10 seconds...
+
+Now invoke the AES decryption TA of TEE...
+The output characters is as follows:
+
+################
+ I am attacker!
+################

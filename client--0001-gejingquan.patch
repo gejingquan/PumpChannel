@@ -1,0 +1,50 @@
+From 5695e20596dd48d83228a5cc93ddb7b11daadb85 Mon Sep 17 00:00:00 2001
+From: gerty1986823 <gerty1986823@126.com>
+Date: Mon, 25 Jan 2021 09:22:24 +0800
+Subject: [PATCH] gejingquan
+
+Signed-off-by: gerty1986823 <gerty1986823@126.com>
+---
+ libteec/src/tee_client_api.c |  2 +-
+ patch.sh                     | 16 ++++++++++++++++
+ 2 files changed, 17 insertions(+), 1 deletion(-)
+ create mode 100755 patch.sh
+
+diff --git a/libteec/src/tee_client_api.c b/libteec/src/tee_client_api.c
+index 7099f6d..2b7e4d0 100644
+--- a/libteec/src/tee_client_api.c
++++ b/libteec/src/tee_client_api.c
+@@ -763,7 +763,7 @@ TEEC_Result TEEC_AllocateSharedMemory(TEEC_Context *ctx, TEEC_SharedMemory *shm)
+ 		if (fd < 0)
+ 			return TEEC_ERROR_OUT_OF_MEMORY;
+ 
+-		shm->buffer = mmap(NULL, s, PROT_READ | PROT_WRITE,
++		shm->buffer = mmap(NULL, (s&0x0fffffffffffffff), PROT_READ | PROT_WRITE,
+ 				   MAP_SHARED, fd, 0);
+ 		close(fd);
+ 		if (shm->buffer == (void *)MAP_FAILED) {
+diff --git a/patch.sh b/patch.sh
+new file mode 100755
+index 0000000..a1426c4
+--- /dev/null
++++ b/patch.sh
+@@ -0,0 +1,16 @@
++#!/bin/bash
++
++rm -rf 0001-gejingquan.patch
++
++git reset --soft 1cdf49
++
++git add .
++
++git commit -s -m 'gejingquan'
++
++git format-patch -1
++
++cp 0001-gejingquan.patch /media/gejingquan/HDD/petalinux/zcu102_optee/zcu102-2018.2/project-spec/meta-user/recipes-apps/optee-client/files/
++
++
++
+-- 
+2.7.4
+
